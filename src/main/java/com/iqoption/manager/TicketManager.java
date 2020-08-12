@@ -1,8 +1,10 @@
 package com.iqoption.manager;
 
+import com.iqoption.comparator.TicketByFlightTimeComparator;
 import com.iqoption.domain.Ticket;
 import com.iqoption.repository.TicketRepository;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class TicketManager {
     private TicketRepository repository;
@@ -27,7 +29,7 @@ public class TicketManager {
         return repository.findByID(id);
     }
 
-    public Ticket[] findAll(String from, String to) {
+    public Ticket[] findAll(String from, String to, Comparator<Ticket> comparator) {
         Ticket[] items = repository.getAll();
         Ticket[] result = new Ticket[0];
         for (Ticket item : items) {
@@ -38,7 +40,7 @@ public class TicketManager {
                 result = tmp;
             }
         }
-        Arrays.sort(result);
+        Arrays.sort(result, comparator);
         return result;
     }
 
