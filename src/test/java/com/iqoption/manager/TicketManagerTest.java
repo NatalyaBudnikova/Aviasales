@@ -1,5 +1,6 @@
 package com.iqoption.manager;
 
+import com.iqoption.comparator.TicketByFlightTimeComparator;
 import com.iqoption.domain.Ticket;
 import com.iqoption.repository.TicketRepository;
 import com.iqoption.exception.NotFoundException;
@@ -14,6 +15,7 @@ class TicketManagerTest {
     Ticket ticket2 = new Ticket(2, 2500, "LCA", "LED", 400);
     Ticket ticket3 = new Ticket(3, 1500, "LED", "LCA", 600);
     Ticket ticket4 = new Ticket(4, 2300, "ASA", "DME", 550);
+    TicketByFlightTimeComparator comparator = new TicketByFlightTimeComparator();
 
     @BeforeEach
     void setUp() {
@@ -37,31 +39,26 @@ class TicketManagerTest {
     void removeAll() {
         Ticket[] expected = {};
         manager.removeAll();
-        assertArrayEquals(expected, manager.findAll("led", "lca"));
+        assertArrayEquals(expected, manager.findAll("led", "lca", comparator));
     }
 
     @Test
     void removeById() {
         Ticket[] expected = {ticket1};
         manager.removeById(3);
-        assertArrayEquals(expected, manager.findAll("led", "lca"));
-    }
-
-    @Test
-    void removeByIdNotFound() {
-        assertThrows(NotFoundException.class, () -> manager.removeById(16));
+        assertArrayEquals(expected, manager.findAll("led", "lca", comparator));
     }
 
     @Test
     void findAll() {
-        Ticket[] expected = {ticket3, ticket1};
-        assertArrayEquals(expected, manager.findAll("led", "lca"));
+        Ticket[] expected = {ticket1, ticket3};
+        assertArrayEquals(expected, manager.findAll("led", "lca", comparator));
     }
 
     @Test
     void findAllNotFound() {
         Ticket[] expected = {};
-        assertArrayEquals(expected, manager.findAll("led", "vn"));
+        assertArrayEquals(expected, manager.findAll("led", "vn", comparator));
     }
 
 

@@ -29,16 +29,10 @@ class TicketRepositoryTest {
     }
 
     @Test
-    void removeByIdWithoutItems() {
-        TicketRepository repository = new TicketRepository();
-        assertThrows(NotFoundException.class, () -> repository.removeById(2));
-    }
-
-    @Test
     void removeAll() {
         repository.removeAll();
         Ticket[] expected = {};
-        assertArrayEquals(expected, repository.getAll());
+        assertArrayEquals(expected, repository.getAll().toArray());
     }
 
     @Test
