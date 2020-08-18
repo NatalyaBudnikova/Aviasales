@@ -5,10 +5,11 @@ import com.iqoption.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TicketRepository {
-    private List<Ticket> items = new ArrayList();
+    private List<Ticket> items = new LinkedList<>();
 
     public void save(Ticket item) {
         items.add(item);
