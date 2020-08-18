@@ -3,18 +3,15 @@ package com.iqoption.repository;
 import com.iqoption.domain.Ticket;
 import com.iqoption.exception.NotFoundException;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class TicketRepository {
-    private Ticket[] items = new Ticket[0];
+    private List<Ticket> items = new ArrayList();
 
     public void save(Ticket item) {
-        Ticket[] tmp = new Ticket[items.length + 1];
-
-        System.arraycopy(items, 0, tmp, 0, items.length);
-
-        int lastIndex = tmp.length - 1;
-        tmp[lastIndex] = item;
-
-        items = tmp;
+        items.add(item);
     }
 
     public Ticket findByID(int id) {
@@ -29,27 +26,15 @@ public class TicketRepository {
     }
 
     public void removeById(int id) {
-        if (items.length <= 0 || findByID(id) == null) {
-            throw new NotFoundException("Ticket id=" + id + " not found");
-        }
-
-        Ticket[] tmp = new Ticket[items.length - 1];
-        int index = 0;
-        for (Ticket item : items) {
-            if (item.getId() != id) {
-                tmp[index] = item;
-                index++;
-            }
-        }
-        items = tmp;
+        items.removeIf((i) -> i.getId() == id);
     }
 
 
     public void removeAll() {
-        items = new Ticket[0];
+        items.clear();
     }
 
-    public Ticket[] getAll() {
+    public List<Ticket> getAll() {
         return items;
     }
 

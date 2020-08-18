@@ -50,11 +50,6 @@ class TicketManagerTest {
     }
 
     @Test
-    void removeByIdNotFound() {
-        assertThrows(NotFoundException.class, () -> manager.removeById(16));
-    }
-
-    @Test
     void findAll() {
         Ticket[] expected = {ticket1, ticket3};
         assertArrayEquals(expected, manager.findAll("led", "lca", comparator));
